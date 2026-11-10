@@ -8,7 +8,7 @@ from media_catalog.models import Media
 
 
 def make_item(item_id: str, name: str = "Солярис", category: str = "фильм") -> Media:
-    """Создать допустимый объект для теста."""
+    """Создаёт корректный Media для проверки операций каталога."""
     return Media(item_id, name, category, 1972, "Автор", 90)
 
 
@@ -56,7 +56,7 @@ def test_search_and_independent_results() -> None:
 
 
 def test_iteration_order_and_readding() -> None:
-    """Порядок повторяем; повторное добавление перемещает объект в конец."""
+    """Проверяет порядок обхода и положение объекта после повторного добавления."""
     first, second = make_item("b"), make_item("a")
     catalog = Catalog([first, second])
     assert list(catalog) == list(catalog) == [first, second]

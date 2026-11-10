@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 def run_cli(*args: str) -> subprocess.CompletedProcess[str]:
-    """Запустить реальную точку входа в отдельном процессе."""
+    """Запускает CLI отдельным процессом и возвращает его вывод и код завершения."""
     env = os.environ.copy()
     env["PYTHONPATH"] = str(Path(__file__).resolve().parents[1] / "src")
     env["PYTHONIOENCODING"] = "utf-8"
@@ -44,7 +44,7 @@ def test_cli_lifecycle(tmp_path) -> None:
 
 
 def test_cli_bad_load_preserves_file(tmp_path) -> None:
-    """Ошибка импорта не перезаписывает рабочий файл."""
+    """Проверяет, что загрузка повреждённого JSON не изменяет рабочий файл."""
     path = tmp_path / "catalog.json"
     prefix = ("--file", str(path))
     assert run_cli(*prefix, "add", "1", "Фильм", "фильм", "2000", "Автор", "90").returncode == 0

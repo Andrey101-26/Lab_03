@@ -11,7 +11,7 @@ from media_catalog.models import Media
 
 
 def save_catalog(catalog: Catalog, path: str | Path) -> None:
-    """Сохранить все поля и порядок объектов в UTF-8 JSON."""
+    """Сохраняет версию формата и все объекты каталога в JSON-файл."""
     document = {"format_version": FORMAT_VERSION, "items": [asdict(item) for item in catalog]}
     try:
         Path(path).write_text(json.dumps(document, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -20,7 +20,7 @@ def save_catalog(catalog: Catalog, path: str | Path) -> None:
 
 
 def load_catalog(path: str | Path, catalog: Catalog | None = None) -> Catalog:
-    """Проверить весь документ и только затем заменить целевой каталог."""
+    """Загружает JSON в новый каталог или заменяет переданный после полной проверки."""
     try:
         document = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, UnicodeError, ValueError) as error:

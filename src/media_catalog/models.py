@@ -17,7 +17,7 @@ class Media:
     minutes: int
 
     def __post_init__(self) -> None:
-        """Отклонить неверные типы и значения при создании."""
+        """Проверяет поля при создании Media и вызывает InvalidMediaError при ошибке."""
         for field_name in ("id", "name", "category", "creator"):
             value = getattr(self, field_name)
             if not isinstance(value, str) or not value.strip():

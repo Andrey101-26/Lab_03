@@ -12,7 +12,7 @@ from media_catalog.storage import load_catalog, save_catalog
 
 
 def sample() -> Media:
-    """Вернуть образец со всеми полями."""
+    """Создаёт Media с известными значениями для проверки сохранения и загрузки."""
     return Media("001", "Солярис", "фильм", 1972, "Андрей Тарковский", 167)
 
 
@@ -50,7 +50,7 @@ def test_unknown_version_keeps_catalog(tmp_path) -> None:
 
 @pytest.mark.parametrize("failure", ["invalid", "duplicate", "missing_field"])
 def test_failure_in_middle_is_atomic(tmp_path, failure) -> None:
-    """Второй неверный объект не позволяет загрузить даже первый."""
+    """Проверяет, что ошибка второго объекта оставляет исходный каталог без изменений."""
     original = sample()
     catalog = Catalog([original])
     first = asdict(Media("new", "Новый", "фильм", 2020, "Автор", 80))

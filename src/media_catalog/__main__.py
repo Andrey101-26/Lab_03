@@ -12,7 +12,7 @@ from media_catalog.storage import load_catalog, save_catalog
 
 
 def create_parser() -> argparse.ArgumentParser:
-    """Описать команды и аргументы терминала."""
+    """Создаёт обработчик команд терминала и справку по их аргументам."""
     parser = argparse.ArgumentParser(description="Каталог медиаматериалов")
     parser.add_argument("--file", type=Path, default=Path("catalog.json"),
                         help="файл каталога (по умолчанию catalog.json)")
@@ -41,13 +41,13 @@ def create_parser() -> argparse.ArgumentParser:
 
 
 def show_item(item: Media) -> None:
-    """Вывести все поля одного материала."""
+    """Выводит поля медиаобъекта одной строкой."""
     print(f"{item.id} | {item.name} | {item.category} | {item.year} | "
           f"{item.creator} | {item.minutes} мин.")
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Выполнить команду; вернуть 0 при успехе и 2 при ошибке."""
+    """Выполняет команду терминала. Возвращает 0 при успехе и 2 при ошибке каталога."""
     args = create_parser().parse_args(argv)
     try:
         catalog = load_catalog(args.file) if args.file.exists() else Catalog()
